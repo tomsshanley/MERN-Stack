@@ -1,11 +1,14 @@
 // requiring express (basically importing) as our backend framework
 const express = require('express')
+const colors = require('colors')
 //importing dotenv. .config() is a function that makes a file to put our variables in it
 const dotenv = require('dotenv').config() 
 const {errorHandler} = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 
-
+//run db connection function
+connectDB()
 
 //initialise express to variable 'app'
 const app = express()
