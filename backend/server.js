@@ -19,6 +19,7 @@ app.use(express.urlencoded({extended: false}))
 
 //requiring routes folder so all the routes aren't in the server.js file
 app.use('/api/goals', require('./routes/goalRoutes'))
+app.use('/api/users', require('./routes/userRoutes'))
 
 //initialise errormiddlerware, overrides the defulat express errorhandler
 app.use(errorHandler)

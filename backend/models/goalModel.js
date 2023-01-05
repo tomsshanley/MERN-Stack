@@ -6,6 +6,12 @@ const mongoose = require('mongoose')            //bring in mongoose
 const goalSchema = mongoose.Schema({            //set goalSchema to a mongosoe Schema
     //in here you define the fields
     //text obeject: with type of string and required value
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        //reference object used as the .ObjectId needs to know where to point to
+        ref: 'User',
+    },
     text: {
         type: String,
         required: [true, 'Please add a text value']
