@@ -13,8 +13,8 @@ const Goal = require('../models/goalModel')
 // @access  Private
 const getGoals = asyncHandler(async (req,res) => {
 
-    //get goals from our database through the mongoose model "Goal" --------------
-    const goals = await Goal.find()
+    //get goals from our database through the mongoose model "Goal" --------------finds specifc goal for logged in user
+    const goals = await Goal.find({user: req.user.id})
     //------------------------------------
 
     res.status(200).json(goals)
