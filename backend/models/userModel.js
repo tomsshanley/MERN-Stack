@@ -1,3 +1,5 @@
+//This file contains all the schema that we want a user to have/know
+
 const mongoose = require('mongoose')
 
 const userSchema = mongoose.Schema({
@@ -15,6 +17,7 @@ const userSchema = mongoose.Schema({
         required: [true, 'Please add a password']
     },
 },
+//adds a time stamp field (created at, updated at)
 {
     timestamps: true 
 })  

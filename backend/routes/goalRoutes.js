@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+
+//bring in some functions from the controllers to set as endpoints
 const {getGoals, setGoals, updateGoals, deleteGoals} = require('../controllers/goalContoller')
 
 
