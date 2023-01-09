@@ -53,6 +53,19 @@ const updateGoals = asyncHandler(async (req,res) => {
         throw new Error('Goal not found')
     }
 
+    const user = await User.findById(req.user.id) //get the logged in users id
+    if (!user) {                                //if user does not exist
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    //Check that logged in user matches the user on the goal
+    if(goal.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorised')
+    }
+
+
     //if goal exists, using mongodb findbyidandupdate and paramets, id, value, new
     //it will get the id, then put in the new text from request.body, if it is not there then 
     //make a new goal
@@ -67,7 +80,23 @@ const updateGoals = asyncHandler(async (req,res) => {
 const deleteGoals = asyncHandler(async (req,res) => {
     //find goal by id
     const goal = await Goal.findById(req.params.id)
-    
+    if (!goal) {
+        res.status(400)
+        throw new Error('Goal not Found')
+    }
+
+    const user = await User.findById(req.user.id) //get the logged in users id
+    if (!user) {                                //if user does not exist
+        res.status(401)
+        throw new Error('User not found')
+    }
+
+    //Check that logged in user matches the user on the goal
+    if(goal.user.toString() !== user.id) {
+        res.status(401)
+        throw new Error('User not authorised')
+    }
+
     //remove goal
     await goal.remove()
 
