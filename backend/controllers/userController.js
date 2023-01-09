@@ -85,10 +85,18 @@ const loginUser = asyncHandler( async (req, res) => {
 //Get User data function -> Get the token for the current logged in user
 // @desc    Get User data
 // @route   GET /api/users/me
-// @access  Public
+// @access  Private
 const getMe = asyncHandler( async (req, res) => {
+    const {_id, name, email} = await User.findById(req.user.id)
+    res.status(200).json({
+        id: _id,
+        name,
+        email
+    })
     res.json({message: 'User data display'})
 })
+
+
 
 // generate JWT
 //signs a new token with the id passed in that will expire in 30 days
