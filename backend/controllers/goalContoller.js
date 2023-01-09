@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler')
 
 //pull in models
 const Goal = require('../models/goalModel')
-
+const User = require('../models/userModel')
 
 //@desc Get goals
 // @route   GET /api/goals
@@ -33,6 +33,7 @@ const setGoals = asyncHandler(async (req,res) => {
     //-------after error handling when get set goals with database
     const goal = await Goal.create({
         text: req.body.text,
+        user: req.user.id
     })
 
     res.status(200).json(goal)
