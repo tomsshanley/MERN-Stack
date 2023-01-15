@@ -1,8 +1,23 @@
-import {FaSignInAlt, FaSignInAlt, FaUser} from 'react-icons/fa'
+// Importing react icons
+import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
+// Bring in reactrouterdom link to have links to our pages
+import {Link} from 'react-router-dom'
 
 function Header() {
   return (
-    <div>Header</div>
+    <header className='header'>
+        <div className="logo">
+            <Link to='/'>GoalSetter</Link>
+        </div>
+        <ul>
+            <li>
+                <Link to='/login'><FaSignInAlt/> Login</Link>
+            </li>
+            <li>
+                <Link to='/register'><FaUser/> User</Link>
+            </li>
+        </ul>
+    </header>
   )
 }
 
