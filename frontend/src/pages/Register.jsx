@@ -1,6 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify"
+import { register, reset } from "../features/auth/authSlice";
+import Spinner from "../componants/Spinner";
 
 function Register() {
   // creating an object for the form data
@@ -14,6 +19,24 @@ function Register() {
   // creating consts to be stored in formData object
   const {name, email, password, password2 } = formData
 
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const {user, isLoading, isError, isSuccess, message} = useSelector(
+    (state) => state.auth)
+
+  useEffect(() => {
+    if(isError) {
+      toast.error(message)
+    }
+    if(isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch]) 
+  // above is a dependencie array, it will fire off if anything changes
+  
   // onChange function. When using react 'useState' for form input...
   // a user can't type in the forms by defualt. 
   const onChange = (e) => {
@@ -27,6 +50,21 @@ function Register() {
   // onSubmit function
   const onSubmit = (e) => {
     e.preventDefault()
+
+    if(password !== password2) {
+      toast.error('Passwords do not match')
+    } else {
+      const userData = {
+        name, 
+        email, 
+        password,
+      }
+      dispatch(register(userData))
+    }
+
+    if(isLoading) {
+      return <Spinner />
+    }
   }
 
   return (
