@@ -18,6 +18,15 @@ const initialState = {
     message: ''
 }
 
+// register user
+export const register = createAsyncThunk('auth/register', async(user, thunkAPI) => {
+    try {
+        return await authService.register(user)
+    } catch (error) {
+        
+    }
+})
+
 
 // creating the actual slice
 export const authSlice = createSlice({
