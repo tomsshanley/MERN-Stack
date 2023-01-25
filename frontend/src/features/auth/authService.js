@@ -20,9 +20,29 @@ const register = async (userData) => {
     return response.data
 }
 
+// loging user
+const login = async (userData) => {
+    // making a post request
+    const response = await axios.post(API_URL + 'login', userData)
+
+    // if it works then store to local storage
+    if(response.data) {
+        localStorage.setItem('user', JSON.stringify(response.data))
+    }
+
+    return response.data
+}
+
+// Logout user
+const logout = () => {
+    localStorage.removeItem('user')
+}
+
 // create a variable to store functions to be exported
 const authService = {
-    register
+    register,
+    logout,
+    login,
 }
 
 export default authService

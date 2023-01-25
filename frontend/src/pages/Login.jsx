@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
 import { FaSignInAlt } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {toast} from "react-toastify"
+import { login, reset } from "../features/auth/authSlice";
+import Spinner from "../componants/Spinner";
 
 function Login() {
   // creating an object for the form data
@@ -12,6 +17,24 @@ function Login() {
 
   // creating consts to be stored in formData object
   const {email, password  } = formData
+
+  // navigate and dispatch
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const {user, isLoading, isError, isSuccess, message} = useSelector(
+    (state) => state.auth)
+
+  useEffect(() => {
+    if(isError) {
+      toast.error(message)
+    }
+    if(isSuccess || user) {
+      navigate('/')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch]) 
 
   // onChange function. When using react 'useState' for form input...
   // a user can't type in the forms by defualt. 
@@ -26,6 +49,18 @@ function Login() {
   // onSubmit function
   const onSubmit = (e) => {
     e.preventDefault()
+
+    const userData = {
+      email,
+      password
+    }
+
+    dispatch(login(userData))
+  }
+
+  // spinner
+  if(isLoading) {
+    return <Spinner />
   }
 
   return (
