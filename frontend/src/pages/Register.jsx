@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaUser } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 
 function Register() {
   // creating an object for the form data
